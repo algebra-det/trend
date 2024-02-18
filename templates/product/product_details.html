@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Prodotto : {{ product.title }}</title>
+{% endblock title %}
+
+{% block content %}
+		
+				<div class="m-t-82">
+					<div class="page_content">
+						<div class="vendor_outer">
+						
+						<div class="vendor_title">
+								<h4>Dettagli del prodotto</h4>
+								<a href="add_admin/html"><i class="fa fa-plus"></i></a>
+							</div>
+						<div class="link_box">
+						
+						<table style="width:100%" class="table table-striped">
+						
+						<tbody>
+						
+						<tr>
+						<td>nome del prodotto</td>
+						<td>{{ product.title|title }}</td>
+						</tr>
+						
+						
+						
+						<tr>
+						<td>Categoria</td>
+						<td>{{ product.category }}</td>
+						</tr>
+						
+						
+						<tr>
+						<td>Descrizione </td>
+						<td>{{ product.description|title }}</td>
+						</tr>
+						
+						<tr>
+						<td>Costo </td>
+						<td>{{ product.cost }}</td>
+						</tr>
+						
+						
+						<tr>
+						<td>Credito </td>
+						<td>{{ product.points }}</td>
+						</tr>
+						
+						<tr>
+						<td>Piace </td>
+						<td>{{ product.hearts }}</td>
+						</tr>
+						
+						
+						<tr>
+						<td>Carrello</td>
+						<td>{{ product.basket }}</td>
+						</tr>
+						
+						{% if product.image %}
+						<tr>
+						<td>immagini</td>
+						<td><img src="{{ product.image.url }}" height="400px" width="400px"></td>
+						</tr>
+						{% endif %}
+						
+					
+						
+						</tbody>
+						</table>
+						
+						
+						</div>
+						</div>
+					</div>
+					<div class="footer">
+						<p>Copyright © 2020. </p>
+					</div>
+				</div>
+{% endblock content %}

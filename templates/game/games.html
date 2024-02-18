@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Giochi</title>
+{% endblock title %}
+
+
+
+{% block content %}
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+			<div class="vendor_title">
+					<h4>Giochi</h4>
+					<a href="{% url 'game:create_game' %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			
+			<table id="example" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+			<tr>
+			<th>Nome del gioco </th>
+			<th>Categoria </th>
+			<th>Punto totale </th>
+			<th>Posizione</th>
+			<th>Sfide</th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			
+			{% for game in games %}
+			<tr>
+			<td>{{ game.title|title }}</td>
+			<td>{{ game.category }}</td>
+			<td>{{ game.total_point }}</td>
+			<td>{{ game.location_name|slice:":40" }}...</td>
+			<td><a href="{% url 'game:challenge' game.id %}">Elenco delle sfide</a></td>
+			<td>
+			<a href="{% url 'game:single' game.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="{% url 'game:edit_game' game.id %}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp;&nbsp;
+			<a href="{% url 'game:delete_game' game.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			</td>
+			</tr>
+			{% endfor %}
+			
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}

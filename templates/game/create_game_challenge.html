@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+<title>Crea una sfida di gioco</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=<api-key>&callback=initAutocomplete&libraries=places&v=weekly"
+  defer
+></script>
+<script>
+  // This example adds a search box to a map, using the Google Place Autocomplete
+  // feature. People can enter geographical searches. The search box will return a
+  // pick list containing a mix of places and predicted search terms.
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+  function initAutocomplete() {
+	const map = new google.maps.Map(document.getElementById("map"), {
+	  center: { lat: -33.8688, lng: 151.2195 },
+	  zoom: 13,
+	  mapTypeId: "roadmap",
+	});
+	// Create the search box and link it to the UI element.
+	const input = document.getElementById("id_location_name");
+	const searchBox = new google.maps.places.SearchBox(input);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	// Bias the SearchBox results towards current map's viewport.
+	map.addListener("bounds_changed", () => {
+	  searchBox.setBounds(map.getBounds());
+	});
+	let markers = [];
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	searchBox.addListener("places_changed", () => {
+	  const places = searchBox.getPlaces();
+
+	  if (places.length == 0) {
+		return;
+	  }
+	  // Clear out the old markers.
+	  markers.forEach((marker) => {
+		marker.setMap(null);
+	  });
+	  markers = [];
+	  // For each place, get the icon, name and location.
+	  const bounds = new google.maps.LatLngBounds();
+	  places.forEach((place) => {
+		if (!place.geometry) {
+		  console.log("Returned place contains no geometry");
+		  return;
+		}
+
+		var lat = place.geometry.location.lat();
+		lat = lat.toString().slice(0,9);
+		document.getElementById('id_location_latitude').value = lat;
+		var lon = place.geometry.location.lng();
+		lon = lon.toString().slice(0,9);
+		document.getElementById('id_location_longitude').value = lon;
+		const icon = {
+		  url: place.icon,
+		  size: new google.maps.Size(71, 71),
+		  origin: new google.maps.Point(0, 0),
+		  anchor: new google.maps.Point(17, 34),
+		  scaledSize: new google.maps.Size(25, 25),
+		};
+		// Create a marker for each place.
+		markers.push(
+		  new google.maps.Marker({
+			map,
+			icon,
+			title: place.name,
+			position: place.geometry.location,
+		  })
+		);
+
+		if (place.geometry.viewport) {
+		  // Only geocodes have viewport.
+		  bounds.union(place.geometry.viewport);
+		} else {
+		  bounds.extend(place.geometry.location);
+		}
+	  });
+	  map.fitBounds(bounds);
+	});
+  }
+</script>
+{% endblock title %}
+
+{% block content %}
+
+				
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>Crea una sfida di gioco</h4>
+					
+				</div>
+			<div class="link_box">
+			
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+
+					<div class="form-row">
+						<div class="form-group col-md-12">{{ form.errors }}</div>
+					</div>
+
+					<div class="form-row" hidden>
+					<div class="form-group col-md-12">
+						<select name="game" required="" id="id_game" class="form-control">
+							<option value="{{ game.id }}" selected="{{ game.title }}">{{ game.title }}</option>
+						  
+						  </select>
+					</div>
+					</div>
+					
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label>Titolo </label>
+						{{ form.title.error }}
+						{{ form.title }}
+					</div>
+					</div>
+					
+
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label>Descrizione </label>
+							{{ form.description.error }}
+							{{ form.description }}
+						</div>
+					</div>
+
+
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label>Posizione</label>
+							{{ form.location_name.error }}
+							{{ form.location_name }}
+						</div>
+					</div>
+					
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label>Posizione Latitudine</label>
+							{{ form.location_latitude.error }}
+							{{ form.location_latitude }}
+						</div>
+					</div>
+					
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label>Posizione Longitudine</label>
+							{{ form.location_longitude.error }}
+							{{ form.location_longitude }}
+						</div>
+					</div>
+
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label>suggerimento</label>
+						{{ form.hint.error }}
+						{{ form.hint }}
+					</div>
+					</div>
+					
+					
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label>Traccia</label>
+						{{ form.clue.error }}
+						{{ form.clue }}
+					</div>
+					</div>
+					
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label>Tipo di oggetto</label>
+						{{ form.object_type.error }}
+						{{ form.object_type }}
+					</div>
+					</div>
+					
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label>Trofie</label>
+						{{ form.trophy.error }}
+						{{ form.trophy }}
+					</div>
+					</div>
+					
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label>scatola magica</label>
+						{{ form.magic_box.error }}
+						{{ form.magic_box }}
+					</div>
+					</div>
+					
+					<div class="form-group">
+					<div class="form-check">
+						
+						<!-- <label class="form-check-label" for="gridCheck"> -->
+						{{ form.status.error }}
+						{{ form.status }}
+						Stato
+						</label>
+					</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="inputEmail4">Immagine ( Necessaria )</label>
+							{{ form.image.error }}
+							{{ form.image }}
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="inputEmail4">Immagine</label>
+							{{ form.image1.error }}
+							{{ form.image1 }}
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="inputEmail4">Immagine</label>
+							{{ form.image2.error }}
+							{{ form.image2 }}
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="inputEmail4">Immagine</label>
+							{{ form.image3.error }}
+							{{ form.image3 }}
+						</div>
+					</div>
+					<div id="map"></div>
+
+					<button type="submit" class="btn btn-primary">Crea sfida</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input');
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control';
+	}
+
+	// document.getElementById('id_game').hidden = true;
+
+	document.getElementById('id_location_name').className += ' pac-target-input';
+
+	texts = document.getElementsByTagName('textarea');
+	for(i=0;i<texts.length;i++){
+		texts[i].className += 'form-control';
+	}
+
+	selects = document.getElementsByTagName('select');
+	for(i=0;i<selects.length;i++){
+		selects[i].className += 'form-control';
+	}
+	var active = document.getElementById('id_status');
+	active.className = 'form-check-label';
+	active.id += ' gridCheck';
+
+	var active = document.getElementById('id_category');
+	active.className += 'select form-control';
+
+	document.getElementById('id_image').required = true;
+	document.getElementById('id_magic_box').required = true;
+	// document.getElementById('id_location_latitude').style.display = "none";
+	// document.getElementById('id_location_longitude').style.display = "none";
+
+</script>
+{% endblock script %}

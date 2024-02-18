@@ -1,0 +1,127 @@
+{% extends 'base.html' %}	
+
+{% block title %}
+<title>Modifica Pubblica</title>
+{% endblock title %}
+
+{% block content %}
+
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+				<h4>Modifica Pubblica:</h4>
+			</div>
+
+			<h5 style="margin-bottom: 10px;"></h5>
+
+			<div class="link_box">
+			
+				<table style="width:100%" class="table table-striped">
+						
+					<tbody>
+					
+					<tr>
+					<td>Pubblica Id</td>
+					<td>{{ post.id }}</td>
+					</tr>
+
+					<tr>
+						<td>Utente </td>
+						<td>{{ post.user }}</td>
+					</tr>
+					
+					<tr>
+						<td>Utente Email</td>
+						<td>{{ post.user.email }}</td>
+					</tr>
+					
+					<tr>
+						<td>Utente Credito totale </td>
+						<td>{{ post.user.profile.credits }}</td>
+					</tr>
+					
+					<tr>
+					<td>Prodotto Challenge</td>
+					<td>{{ post.challenge }}</td>
+					</tr>
+					
+					
+					
+					<tr>
+					<td>Challenge Presentato a</td>
+					<td>{{ post.challenge.created_at }}</td>
+					</tr>
+					
+					
+					<tr>
+					<td>Pubblica creato a</td>
+					<td>{{ post.created_at }}</td>
+					</tr>
+
+
+					<tr>
+					<td>Pubblica immagini</td>
+					{% if post.submit_challenge %}
+					<td><img src="{{ post.submit_challenge.image.url }}" height="400px" width="400px"></td>
+					{% elif post.image %}
+					<td><img src="{{ post.image.url }}" height="400px" width="400px"></td>
+					<br>
+					<td>{{ post_form.image }}</td>
+					{% else %}
+					<td>None</td>
+					{% endif %}
+					</tr>
+
+					</tbody>
+				</table>
+			
+
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					
+					{% if submit_challenge_form %}
+					<div class="form-group">
+					<div class="form-check">
+						<label class="form-check-label">
+							Immagine
+						</label>
+						{{ submit_challenge_form.image }}
+					</div>
+					</div>
+					{% endif %}
+					
+					<div class="form-group">
+					<div class="form-check">
+						<label class="form-check-label">
+							Stato di approvazione {{ post_form.is_approved }}
+						</label>
+					</div>
+					</div>
+					
+				
+
+					<button type="submit" class="btn btn-primary">Richiesta di aggiornamento</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input')
+	console.log(inputs)
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+</script>
+{% endblock script %}

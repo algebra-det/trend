@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Categorie di Prodotto</title>
+{% endblock title %}
+
+{% block content %}
+				
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+			<div class="vendor_title">
+					<h4>categoria di prodotto</h4>
+					<a href="{% url 'product:add_category' %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			
+			<table id="example" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+			<tr>
+			<th>ID categoria </th>
+			<th>Nome della categoria</th>
+			
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+
+			{% for category in categories %}
+			<tr>
+			<td>{{ forloop.counter }}</td>
+			<td>{{ category|title }}</td>
+			<td>
+			<a href="{% url 'product:edit_category' category.id %}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp;&nbsp;
+			<a href="{% url 'product:delete_category' category.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			</td>
+			</tr>
+			{% endfor %}
+			
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+
+{% endblock content %}

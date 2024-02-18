@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Pannello di controllo</title>
+{% endblock title %}
+
+
+{% block content %}
+				
+				<div class="m-t-82">
+					<div class="page_content">
+					{% if messages %}
+						{% for message in messages %}
+							{{ message }}
+						{% endfor %}
+					{% endif %}
+						<div class="link_box">
+							<ul class="d-flex flex-wrap">
+								<li>
+									<a href="{% url 'game:index' %}">
+										<h4>Giochi totali</h4>
+										<h1 class="blue">{{ games }}</h3>
+										<p>Tour del gioco</p>
+										<form action="{% url 'game:index' %}">
+											{% csrf_token %}
+										<button class="btn btn-dark-blue" >DETTAGLI</button>
+										</form>
+									</a>
+								</li>
+								
+								<li>
+									<a href="{% url 'game:index' %}">
+										
+										<h4>Sfide totali</h4>
+										<h1 class="pink">{{ challenges }}</h3>
+										<p>Sfide</p>
+										<form action="{% url 'game:index' %}">
+											{% csrf_token %}
+										<button class="btn btn-dark-blue" >DETTAGLI</button>
+										</form>
+									</a>
+								</li>
+								<li>
+									<a href="{% url 'account:users' %}">
+										
+										<h4>Utenti totali</h4>
+										<h1 class="green">{{ users }}</h1>
+										<p>Utenti</p>
+										<form action="{% url 'account:admin_users' %}">
+											{% csrf_token %}
+										<button class="btn btn-dark-blue" >DETTAGLI</button>
+										</form>
+									</a>
+								</li>
+								
+								<li>
+									<a href="{% url 'core:reward' %}">
+										
+										<h4>Benvenuto Punti:</h4>
+										<h1 class="green">{{ reward.welcome }}</h1>
+										<p>benvenuta</p>
+										<form action="{% url 'core:reward' %}">
+											{% csrf_token %}
+										<button class="btn btn-dark-blue" >Edit</button>
+										</form>
+									</a>
+								</li>
+								
+								<!-- <li>
+									<a href="{% url 'core:reward' %}">
+										
+										<h4>Pubblica punti:</h4>
+										<h1 class="blue">{{ reward.per_post }}</h1>
+										<p>Pubblica</p>
+										<form action="{% url 'core:reward' %}">
+											{% csrf_token %}
+										<button class="btn btn-dark-blue" >Edit</button>
+										</form>
+									</a>
+								</li> -->
+							</ul>
+						</div>
+					</div>
+					<div class="footer">
+						<p>Copyright © 2020. </p>
+					</div>
+				</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input');
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+</script>
+{% endblock script %}

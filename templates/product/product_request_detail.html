@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Richiesta : {{ product_request }}</title>
+{% endblock title %}
+
+{% block content %}
+		
+				<div class="m-t-82">
+					<div class="page_content">
+						<div class="vendor_outer">
+						
+						<div class="vendor_title">
+								<h4>Dettagli richiesta prodotto</h4>
+								<a href="add_admin/html"><i class="fa fa-plus"></i></a>
+							</div>
+						<div class="link_box">
+						
+						<table style="width:100%" class="table table-striped">
+						
+						<tbody>
+						
+						<tr>
+						<td>nome del prodotto</td>
+						<td>{{ product_request.product.title|title }}</td>
+						</tr>
+
+						
+						{% if product_request.product.image %}
+						<tr>
+						<td>immagini</td>
+						<td><img src="{{ product_request.product.image.url }}" height="400px" width="400px"></td>
+						</tr>
+						{% endif %}
+
+						
+						<tr>
+							<td>Utente </td>
+							<td>{{ product_request.user|title }}</td>
+						</tr>
+						
+						<tr>
+							<td>Email utente</td>
+							<td>{{ product_request.user.email }}</td>
+						</tr>
+						
+						<tr>
+							<td>Credito totale utente </td>
+							<td>{{ product_request.user.profile.credits }}</td>
+						</tr>
+						
+						<tr>
+							<td>Città e provincia </td>
+							<td>{{ product_request.user.city }}, {{ product_request.user.province }}</td>
+						</tr>
+						
+						<tr>
+							<td>Latitudine utente </td>
+							<td>{{ product_request.user.profile.latitude }}</td>
+						</tr>
+
+						<tr>
+							<td>Longitudine dell'utente </td>
+							<td>{{ product_request.user.profile.longitude }}</td>
+						</tr>
+						
+						<tr>
+							<td>Soddisfatto </td>
+							<td>{{ product_request.fullfilled }}</td>
+						</tr>
+					
+						
+						</tbody>
+						</table>
+						
+						
+						</div>
+						</div>
+					</div>
+					<div class="footer">
+						<p>Copyright © 2020. </p>
+					</div>
+				</div>
+{% endblock content %}

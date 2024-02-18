@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Modifica utente</title>
+{% endblock title %}
+
+{% block content %}	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>Modifica utente</h4>
+					
+			</div>
+			{{ form.errors }}
+			<div class="link_box">
+			
+				<form method="POST">
+					{% csrf_token %}
+					
+					<div class="form-row">
+					<div class="form-group col-md-6">
+						<label>Nome di battesimo</label>
+						{{ form.first_name }}
+						{{ form.first_name.errors }}
+						
+					</div>
+					<div class="form-group col-md-6">
+						<label>Cognome</label>
+						{{ form.last_name }}
+					</div>
+					</div>
+					
+					<div class="form-row">
+					<div class="form-group col-md-6">
+						<label>Email</label>
+						{{ form.email }}
+						{{ form.email.errors }}
+					</div>
+					<div class="form-group col-md-6">
+						<label>D.O.B</label>
+						{{ form.dob }}
+						{{ form.dob.errors }}
+						
+					</div>
+					</div>
+
+					<div class="form-row">
+					<div class="form-group col-md-6">
+						<label>Città</label>
+						{{ form.city }}
+					</div>
+					<div class="form-group col-md-6">
+						<label>Provincia</label>
+						{{ form.province }}
+						{{ form.province.errors }}
+						
+					</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Update User</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input')
+	console.log(inputs)
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	var date1 = document.getElementById('id_dob')
+	date1.type = 'date'
+
+	document.getElementById('id_province').className += " form-control select"
+	document.getElementById('id_province').required = true;
+	document.getElementById('id_city').required = true;
+</script>
+{% endblock script %}

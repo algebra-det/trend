@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Admin</title>
+{% endblock title %}
+
+
+{% block content %}
+    <h1>This is Product page</h1>
+
+<div class="row">
+    <div class="col-sm-3">
+        hello
+    </div>
+    <div class="col-sm-9">
+        <form method="get">
+            {{ myfilter.form }}
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <h3>Requests</h3>
+        <ul class="list-group">
+            {% for req in requests %}
+            {% if not req.fullfilled %}
+            <li class="list-group-item">
+                <a href="{% url 'product:single' req.product.id %}">{{ req }}</a>
+                <h4>Category: {{ req.user.username }}</h4>
+                <h4>Category: {{ req.quantity }}</h4>
+                <a href="{% url 'product:fullfil' req.id %}"><button class="btn btn-primary">fullfil</button></a>
+                <a href="{% url 'product:product_request_delete' req.id %}"><button class="btn btn-danger">Delete</button></a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <hr>
+        <h3>Fullfilled Requests</h3>
+        <ul class="list-group">
+            {% for req in requests %}
+            {% if req.fullfilled %}
+            <li class="list-group-item">
+                <a href="{% url 'product:single' req.product.id %}">{{ req }}</a>
+                <h4>Category: {{ req.user.username }}</h4>
+                <h4>Category: {{ req.quantity }}</h4>
+                <a href="{% url 'product:unfullfil' req.id %}"><button class="btn btn-warning">unfullfil</button></a>
+                <a href="{% url 'product:product_request_delete' req.id %}"><button class="btn btn-danger">Delete</button></a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+
+<script src="{% static 'js/date.js' %}"></script>
+{% endblock content %}

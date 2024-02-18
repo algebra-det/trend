@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if category %}
+	<label>Aggiorna categoria:</label>
+	{% else %}
+	<label>Crea categoria :</label>
+	{% endif %}
+{% endblock title %}
+
+
+{% block content %}
+				
+				<div class="m-t-82">
+					<div class="page_content">
+						<div class="vendor_outer">
+						
+						<div class="vendor_title">
+								<h4>categoria di prodotto</h4>
+								
+							</div>
+						<div class="link_box">
+						
+							<form method="POST">
+								{% csrf_token %}
+								<!-- {{ form }} -->
+							  
+							    <div class="form-row">
+								<div class="form-group col-md-6">
+									{% if category %}
+									<label>Cambia categoria "{{ category }}" nome a :</label>
+									{% else %}
+									<label>Nome della categoria :</label>
+									{% endif %}
+								  <input type="text" class="form-control" placeholder="Category Name" required name="title">
+								</div>
+								
+								</div>
+							
+							  <button type="submit" class="btn btn-primary">Aggiorna categoria</button>
+							</form>
+						
+						</div>
+						</div>
+					</div>
+					<div class="footer">
+						<p>Copyright © 2020. </p>
+					</div>
+				</div>
+{% endblock content %}

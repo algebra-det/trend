@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Modifica punti premio</title>
+{% endblock title %}
+
+
+
+{% block content %}
+
+<div class="m-t-82">
+	<div class="page_content">
+		<div class="vendor_outer">
+
+			<div class="vendor_title">
+				<h4>Aggiorna i punti premio</h4>
+
+			</div>
+			<div class="link_box">
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+
+					<p>
+						<label for="id_welcome">Benvenuta:</label>
+						<input type="number" name="welcome" value="{{ form.welcome.value }}" required id="id_welcome"></p>
+					<!-- <p><label for="id_per_post">Per post:</label> <input type="number" name="per_post" value="5"
+							required id="id_per_post"></p> -->
+					<div id="map"></div>
+
+					<button type="submit" class="btn btn-primary">Aggiorna punti</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		<p>Copyright © 2020. </p>
+	</div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var labels = document.getElementsByTagName('label')
+	var inputs = document.getElementsByTagName('input')
+
+	for (i = 0; i < inputs.length; i++) {
+		inputs[i].className += 'form-control'
+	}
+
+</script>
+{% endblock script %}

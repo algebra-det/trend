@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Modifica gioco</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=<api-key>&callback=initAutocomplete&libraries=places&v=weekly"
+  defer
+></script>
+<script>
+  // This example adds a search box to a map, using the Google Place Autocomplete
+  // feature. People can enter geographical searches. The search box will return a
+  // pick list containing a mix of places and predicted search terms.
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+  function initAutocomplete() {
+	const map = new google.maps.Map(document.getElementById("map"), {
+	  center: { lat: -33.8688, lng: 151.2195 },
+	  zoom: 13,
+	  mapTypeId: "roadmap",
+	});
+	// Create the search box and link it to the UI element.
+	const input = document.getElementById("id_location_name");
+	const searchBox = new google.maps.places.SearchBox(input);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	// Bias the SearchBox results towards current map's viewport.
+	map.addListener("bounds_changed", () => {
+	  searchBox.setBounds(map.getBounds());
+	});
+	let markers = [];
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	searchBox.addListener("places_changed", () => {
+	  const places = searchBox.getPlaces();
+
+	  if (places.length == 0) {
+		return;
+	  }
+	  // Clear out the old markers.
+	  markers.forEach((marker) => {
+		marker.setMap(null);
+	  });
+	  markers = [];
+	  // For each place, get the icon, name and location.
+	  const bounds = new google.maps.LatLngBounds();
+	  places.forEach((place) => {
+		if (!place.geometry) {
+		  console.log("Returned place contains no geometry");
+		  return;
+		}
+
+		var lat = place.geometry.location.lat();
+		lat = lat.toString().slice(0,9)
+		document.getElementById('id_location_latitude').value = lat
+		var lon = place.geometry.location.lng();
+		lon = lon.toString().slice(0,9)
+		document.getElementById('id_location_longitude').value = lon
+		const icon = {
+		  url: place.icon,
+		  size: new google.maps.Size(71, 71),
+		  origin: new google.maps.Point(0, 0),
+		  anchor: new google.maps.Point(17, 34),
+		  scaledSize: new google.maps.Size(25, 25),
+		};
+		// Create a marker for each place.
+		markers.push(
+		  new google.maps.Marker({
+			map,
+			icon,
+			title: place.name,
+			position: place.geometry.location,
+		  })
+		);
+
+		if (place.geometry.viewport) {
+		  // Only geocodes have viewport.
+		  bounds.union(place.geometry.viewport);
+		} else {
+		  bounds.extend(place.geometry.location);
+		}
+	  });
+	  map.fitBounds(bounds);
+	});
+  }
+</script>
+{% endblock title %}
+
+
+
+{% block content %}
+	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>Modifica gioco</h4>
+					
+				</div>
+			<div class="link_box">
+				<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+
+				{% if game.category == 'Event' %}
+				<p>
+					<label for="id_number_of_players">Numero di giocatori (ancora):</label>
+					<input type="text" class="" value="{{game.eventgame.num_players}}" name="id_num_players">
+				</p>
+				{% endif %}
+
+				{{ form.as_p }}
+				<div id="map"></div>
+
+				<button type="submit" class="btn btn-primary">Aggiorna gioco</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var labels = document.getElementsByTagName('label')
+	var inputs = document.getElementsByTagName('input')
+
+	var min = document.querySelector("[for='id_min_players']")
+
+	for ( var i = 0; i<labels.length; i++){
+		if (labels[i].htmlFor == 'id_location_latitude' || labels[i].htmlFor == 'id_location_longitude' ){
+			labels[i].hidden = true
+		}
+	}
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	texts = document.getElementsByTagName('textarea')
+	for(i=0;i<texts.length;i++){
+		texts[i].className += 'form-control'
+	}
+
+	selects = document.getElementsByTagName('select')
+	for(i=0;i<selects.length;i++){
+		selects[i].className += 'form-control'
+	}
+	var active = document.getElementById('id_status')
+	active.className = 'form-check-label'
+	active.id += ' gridCheck'
+
+	var date1 = document.getElementById('id_start_date')
+	date1.type = 'date'
+
+	date1 = document.getElementById('id_end_date')
+	date1.type = 'date'
+
+	var active = document.getElementById('id_category')
+	active.className += ' select'
+	active.addEventListener("change", function(){
+		console.log(active.value)
+		if (active.value === 'Classic'){
+			min.parentElement.style.display = "none"
+			document.getElementById('id_min_players').value = 0
+		}
+		else {
+			min.parentElement.style.display = "block"
+		}
+	} )
+
+	// document.getElementById('id_image').required = true;
+	if (document.getElementById('id_category').value == 'Event'){
+		min.parentElement.style.display = "block"
+	} else {
+		min.parentElement.style.display = "none"
+	}
+	
+	document.getElementById('id_location_latitude').hidden = true
+	document.getElementById('id_location_longitude').hidden = true
+
+</script>
+{% endblock script %}
+
+
+

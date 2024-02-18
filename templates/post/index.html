@@ -1,0 +1,61 @@
+{% extends 'base.html' %}	
+	
+{% block title %}
+<title>Pubblica</title>
+{% endblock title %}
+
+{% block content %}
+
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+			<div class="vendor_title">
+					<h4>Pubblica</h4>
+			</div>
+			<div class="link_box">
+			
+			<table id="example" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+			<tr>
+			<th>Per utente</th>
+			<th>Challenge</th>
+			<th>Creato a</th>
+			<th>Stato di approvazione</th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			
+			{% for post in posts %}
+			<tr>
+			<td><a href="{% url 'account:edit' post.user.id %}">{{ post.user.email }}</a></td>
+			<td><a href="{% url 'game:single_challenge' post.challenge.id %}">{{ post.challenge|title }}</a></td>
+			<td>{{ post.created_at}}</td>
+			<td>{{ post.is_approved }}</td>
+			<td>
+			<a href="{% url 'post:detail' post.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="{% url 'post:update' post.id %}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp;&nbsp;
+			<a href="{% url 'post:delete' post.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			</td>
+			</tr>
+			{% endfor %}
+			
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+
+{% endblock content %}

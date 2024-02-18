@@ -1,0 +1,64 @@
+{% extends 'base.html' %}	
+	
+{% block title %}
+<title>Products</title>
+{% endblock title %}
+
+{% block content %}
+
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+			<div class="vendor_title">
+					<h4>Products</h4>
+					<a href="{% url 'product:add' %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			
+			<table id="example" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+			<tr>
+			<th>Nome </th>
+			<th>Categoria </th>
+			<th>Credito</th>
+			<th>Piace</th>
+			<th>Cestini</th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			
+			{% for product in products %}
+			<tr>
+			<td>{{ product|title }}</td>
+			<td>{{ product.category|title }}</td>
+			<td>{{ product.points }}</td>
+			<td>{{ product.hearts }}</td>
+			<td>{{ product.basket }}</td>
+			<td>
+			<a href="{% url 'product:single' product.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="{% url 'product:edit' product.id %}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp;&nbsp;
+			<a href="{% url 'product:delete_product' product.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			</td>
+			</tr>
+			{% endfor %}
+			
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+
+{% endblock content %}

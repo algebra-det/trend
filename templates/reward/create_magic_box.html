@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Crea scatola magica</title>
+{% endblock title %}
+
+
+
+{% block content %}
+	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>Crea scatola magica</h4>
+					
+				</div>
+			<div class="link_box">
+				<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+
+				{{ form.as_p }}
+				<div id="map"></div>
+
+				<button type="submit" class="btn btn-primary">Crea scatola magica</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var labels = document.getElementsByTagName('label')
+	var inputs = document.getElementsByTagName('input')
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	texts = document.getElementsByTagName('textarea')
+	for(i=0;i<texts.length;i++){
+		texts[i].className += 'form-control'
+	}
+
+</script>
+{% endblock script %}

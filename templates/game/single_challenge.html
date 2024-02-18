@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>sfida</title>
+{% endblock title %}
+
+
+
+{% block content %}	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>dettaglio della sfida</h4>
+					<a href="{% url 'game:create_game' %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			
+			<table style="width:100%" class="table table-striped">
+			
+			<tbody>
+			
+			<tr>
+			<td>Titolo</td>
+			<td>{{ challenge.title|title }}</td>
+			</tr>
+
+
+			<tr>
+			<td>Gioco</td>
+			<td>{{ challenge.game|title }}</td>
+			</tr>
+
+
+			<tr>
+			<td>Titolo</td>
+			<td>{{ challenge.title }}</td>
+			</tr>
+			
+			
+			<tr>
+				<td>descrizione della sfida </td>
+				<td>{{ challenge.description }}</td>
+			</tr>			
+			
+			
+			<tr>
+				<td>Posizione</td>
+				<td>{{ challenge.location_name }}</td>
+			</tr>
+
+			<tr>
+			<td>suggerimento </td>
+			<td>{{ challenge.hint }}</td>
+			</tr>
+
+
+			<tr>
+			<td>Traccia </td>
+			<td>{{ challenge.clue }}</td>
+			</tr>
+			
+			<tr>
+			<td>trofeo </td>
+			{% if challenge.trophy %}
+			<td>{{ challenge.trophy }}</td>
+			{% else %}
+			<td>None</td>
+			{% endif %}
+			</tr>
+			
+			<tr>
+			<td>trofeo Punti</td>
+			{% if challenge.trophy %}
+			<td>{{ challenge.trophy.points }}</td>
+			{% else %}
+			<td>None</td>
+			{% endif %}
+			</tr>
+			
+			<tr>
+			<td>Scatola Magica </td>
+			{% if challenge.magic_box %}
+			<td>{{ challenge.magic_box }}</td>
+			{% else %}
+			<td>None</td>
+			{% endif %}
+			</tr>
+			
+			
+			<tr>
+			<td>Scatola Magica Punti</td>
+			{% if challenge.magic_box %}
+			<td>{{ challenge.magic_box.points }}</td>
+			{% else %}
+			<td>None</td>
+			{% endif %}
+			</tr>
+			
+			<tr>
+			<td>Tipo di oggetto </td>
+			<td>{{ challenge.object_type }}</td>
+			</tr>
+
+			
+			
+			<tr>
+			<td>Stato </td>
+			<td>{{ challenge.status }}</td>
+			</tr>
+
+			
+			<tr>
+			<td>Creato </td>
+			<td>{{ challenge.created_at }}</td>
+			</tr>
+			
+			
+			<tr>
+			<td>Aggiornato il </td>
+			<td>{{ challenge.updated_at }}</td>
+			</tr>
+			
+			
+			{% if challenge.image %}
+			<tr>
+			<td>Immagine della sfida 1</td>
+			<td><img src="{{ challenge.image.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+			
+
+			{% if challenge.image1 %}
+			<tr>
+			<td>Immagine della sfida 2</td>
+			<td><img src="{{ challenge.image1.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+
+			{% if challenge.image2 %}
+			<tr>
+			<td>Immagine della sfida 3</td>
+			<td><img src="{{ challenge.image2.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+
+			{% if challenge.image3 %}
+			<tr>
+			<td>Immagine della sfida 4</td>
+			<td><img src="{{ challenge.image3.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}

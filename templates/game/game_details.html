@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Dettaglio del gioco</title>
+{% endblock title %}
+
+
+
+{% block content %}	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+				<h4>Dettagli dei giochi</h4>
+				<a href="{% url 'game:create_game' %}"><i class="fa fa-plus"></i></a>
+			</div>
+			<div class="link_box">
+			
+			<table style="width:100%" class="table table-striped">
+			
+			<tbody>
+			
+			<tr>
+			<td>Titolo</td>
+			<td>{{ game.title|title }}</td>
+			</tr>
+			
+			
+			
+			<tr>
+			<td>Tipo di gioco</td>
+			<td>{{ game.category }}</td>
+			</tr>
+
+			<tr>
+				<td>Punti totali </td>
+				<td>{{ game.total_point }}</td>
+			</tr>
+
+			{% if game.category == 'Event' %}
+				<tr>
+					<td>Partecipanti obbligatori </td>
+					<td>{{ game.min_players }}</td>
+				</tr>
+
+				<tr>
+					<td>I partecipanti si sono già iscritti </td>
+					<td>{{ game.eventgame.total_participants }}</td>
+				</tr>
+			{% endif %}
+
+			<tr>
+			<td>Provincia</td>
+			<td>{{ game.province }}</td>
+			</tr>
+			
+			
+			<tr>
+			<td>Posizione</td>
+			<td>{{ game.location_name }}</td>
+			</tr>
+			
+			
+			<tr>
+			<td>Difficoltà</td>
+			<td>{{ game.difficulty }}</td>
+			</tr>
+			
+			
+			
+			<tr>
+			<td>Descrizione del gioco </td>
+			<td>{{ game.description }}</td>
+			</tr>
+			
+			<tr>
+			<td>Descrizione della posizione </td>
+			<td>{{ game.description }}</td>
+			</tr>
+			
+			
+			<tr>
+			<td>Data d'inizio</td>
+			<td>{{ game.start_date }}</td>
+			</tr>
+			
+			
+			
+			
+			<tr>
+			<td>Data di fine </td>
+			<td>{{ game.end_date }}</td>
+			</tr>
+			
+			
+			<tr>
+			<td>Regole del gioco : sì </td>
+			<td>{{ game.rules_yes }}</td>
+			</tr>
+			
+			<tr>
+			<td>Regole del gioco : No </td>
+			<td>{{ game.rules_no }}</td>
+			</tr>
+			
+			<tr>
+			<td>stato </td>
+			<td>{{ game.status }}</td>
+			</tr>
+
+			{% if game.image %}
+			<tr>
+			<td>Immagine del gioco 1</td>
+			<td><img src="{{ game.image.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+			
+
+			{% if game.image1 %}
+			<tr>
+			<td>Immagine del gioco 2</td>
+			<td><img src="{{ game.image1.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+
+			{% if game.image2 %}
+			<tr>
+			<td>Immagine del gioco 3</td>
+			<td><img src="{{ game.image2.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+
+			{% if game.image3 %}
+			<tr>
+			<td>Immagine del gioco 4</td>
+			<td><img src="{{ game.image3.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+		
+			
+			</tbody>
+			</table>
+
+			{% if promotions|length > 0 %}
+			<div>
+				<div class="vendor_title">
+					<h4>Promozioni</h4>
+					<a href="{% url 'game:create_promotion' game.id %}"><i class="fa fa-plus"></i></a>
+				</div>
+				{% if promotions|length == 1 %}
+				<h6 class="mb-3">Nota: Ci dovrebbe essere più di una promozione per avere effetto nel gioco.</h6>
+				{% endif %}
+				<table style="width:100%" class="table table-striped">
+					<tbody>
+						{% for promotion in promotions %}
+						<tr>
+							<td>{{ promotion.title }} </td>
+							<td>
+								{{ promotion.location_latitude }}, {{ promotion.location_longitude }}
+								<a class="ml-2" href="{% url 'game:edit_promotion' promotion.id %}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp;&nbsp;
+								<a href="{% url 'game:delete_promotion' promotion.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{% else %}
+			<div class="vendor_title">
+				<h4>No Promozioni</h4>
+				<a href="{% url 'game:create_promotion' game.id %}"><i class="fa fa-plus"></i></a>
+			</div>
+			{% endif %}
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}

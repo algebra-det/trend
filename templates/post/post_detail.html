@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Pubblica : {{ post }}</title>
+{% endblock title %}
+
+{% block content %}
+		
+				<div class="m-t-82">
+					<div class="page_content">
+						<div class="vendor_outer">
+						
+						<div class="vendor_title">
+								<h4>Dettagli del Pubblica</h4>
+								<a href="add_admin/html"><i class="fa fa-plus"></i></a>
+							</div>
+						<div class="link_box">
+						
+						<table style="width:100%" class="table table-striped">
+						
+						<tbody>
+						
+						<tr>
+						<td>Utente</td>
+						<td>{{ post|title }}</td>
+						</tr>
+						
+						<tr>
+						<td>Email utente</td>
+						<td>{{ post.user.email }}</td>
+						</tr>
+						
+						
+						
+						<tr>
+						<td>Challenge</td>
+						<td>{{ post.challenge|title }}</td>
+						</tr>
+						
+						
+						<tr>
+						<td>Testo </td>
+						<td>{{ post.text }}</td>
+						</tr>
+						
+						<tr>
+						<td>Piace </td>
+						<td>{{ post.liked.all.count }}</td>
+						</tr>
+						
+						
+						<tr>
+						<td>Creato a </td>
+						<td>{{ post.created_at }}</td>
+						</tr>
+
+						
+						<tr>
+						<td>immagini</td>
+						{% if post.submit_challenge %}
+						<td><img src="{{ post.submit_challenge.image.url }}" height="400px" width="400px"></td>
+						{% elif post.image %}
+						<td><img src="{{ post.image.url }}" height="400px" width="400px"></td>
+						{% else %}
+						<td>None</td>
+						</tr>
+						{% endif %}
+						
+						<tr>
+							<td>Stato di approvazione </td>
+							<td>{{ post.is_approved }}</td>
+						</tr>
+
+						{% if comments %}
+							{% for comment in comments %}
+							<tr>
+								<td>Commento {{ forloop.counter }}</td>
+								<td>{{ comment.user.email }} ({{ comment.user }}) : {{ comment }}</td>
+							</tr>
+							{% endfor %}
+						{% endif %}
+						
+						</tbody>
+						</table>
+						
+						
+						</div>
+						</div>
+					</div>
+					<div class="footer">
+						<p>Copyright © 2020. </p>
+					</div>
+				</div>
+{% endblock content %}

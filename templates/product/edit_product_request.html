@@ -1,0 +1,106 @@
+{% extends 'base.html' %}	
+
+{% block title %}
+<title>Modifica richiesta prodotto</title>
+{% endblock title %}
+
+{% block content %}
+
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+				<h4>Modifica richiesta prodotto:</h4>
+			</div>
+
+			<h5 style="margin-bottom: 10px;">{{ product_request.product.title }} Di {{ product_request.user }}</h5>
+
+			<div class="link_box">
+			
+				<table style="width:100%" class="table table-striped">
+						
+					<tbody>
+					
+					<tr>
+					<td>ID richiesta</td>
+					<td>{{ product_request.id }}</td>
+					</tr>
+					<tr>
+					<td>ID prodotto</td>
+					<td>{{ product_request.product.id }}</td>
+					</tr>
+					
+					<tr>
+					<td>nome del prodotto</td>
+					<td>{{ product_request.product.title }}</td>
+					</tr>
+					
+					
+					
+					<tr>
+					<td>Categoria</td>
+					<td>{{ product_request.product.category }}</td>
+					</tr>
+
+					{% if product_request.product.image %}
+						<tr>
+						<td>Immagine del prodotto</td>
+						<td><img src="{{ product_request.product.image.url }}" height="400px" width="400px"></td>
+						</tr>
+					{% endif %}
+
+					
+					<tr>
+						<td>Utente </td>
+						<td>{{ product_request.user.email }}</td>
+					</tr>
+					
+					<tr>
+						<td>Credito totale utente </td>
+						<td>{{ product_request.user.profile.credits }}</td>
+					</tr>
+
+					</tbody>
+				</table>
+			
+
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					
+					<div class="form-group">
+					<div class="form-check">
+						<label class="form-check-label" style="display: inline-block;">
+							Stato Fullfill {{ form.fullfilled }}
+						</label>
+					</div>
+					</div>
+					
+				
+
+					<button type="submit" class="btn btn-primary">Richiesta di aggiornamento</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input')
+	console.log(inputs)
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	var id_fullfilled = document.getElementById('id_fullfilled');
+	id_fullfilled.style.display = 'inline-block';
+
+</script>
+{% endblock script %}

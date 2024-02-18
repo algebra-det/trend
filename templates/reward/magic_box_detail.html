@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>dettagli della scatola magica</title>
+{% endblock title %}
+
+
+
+{% block content %}	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>dettagli della scatola magica</h4>
+					<a href="{% url 'reward:update_magic_box' magic_box.id %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			<table style="width:100%" class="table table-striped">
+			
+			<tbody>	
+			
+			<tr>
+			<td>titolo della scatola magica</td>
+			<td>{{ magic_box.title|title }}</td>
+			</tr>
+			
+			<tr>
+			<td>punti</td>
+			<td>{{ magic_box.points }}</td>
+			</tr>
+]
+
+			{% if magic_box.image %}
+			<tr>
+			<td>immagine della scatola magica</td>
+			<td><img src="{{ magic_box.image.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+			
+		
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}

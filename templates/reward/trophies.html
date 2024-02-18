@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>trofei</title>
+{% endblock title %}
+
+
+
+{% block content %}
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			{% if messages %}
+				{% for message in messages %}
+					{{ message }}
+				{% endfor %}
+			{% endif %}
+			<div class="vendor_title">
+					<h4>trofei</h4>
+					<a href="{% url 'reward:create_trophy' %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			<table id="example" class="table table-striped table-bordered" style="width:100%">
+			<thead>
+			<tr>
+			<th>Nome del trofeo </th>
+			<th>Creato a </th>
+			<th>Punti </th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			
+			{% for trophy in trophies %}
+			<tr>
+			<td>{{ trophy.title|title }}</td>
+			<td>{{ trophy.created_at }}</td>
+			<td>{{ trophy.points }}</td>
+			<td>
+			<a href="{% url 'reward:trophy_detail' trophy.id %}"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="{% url 'reward:update_trophy' trophy.id %}"><i class="fa fa-edit" aria-hidden="true"></i></a> &nbsp;&nbsp;
+			<a href="{% url 'reward:delete_trophy' trophy.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			</td>
+			</tr>
+			{% endfor %}
+			
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}

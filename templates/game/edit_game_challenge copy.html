@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Edit Game Challenge</title>
+{% endblock title %}
+
+{% block content %}
+
+				
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>Edit Game Challange</h4>
+					
+				</div>
+			<div class="link_box">
+			
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					
+					{{ form.as_p }}
+
+					<button type="submit" class="btn btn-primary">Create Game Challange</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input')
+	console.log(inputs)
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	texts = document.getElementsByTagName('textarea')
+	for(i=0;i<texts.length;i++){
+		texts[i].className += 'form-control'
+	}
+
+	selects = document.getElementsByTagName('select')
+	for(i=0;i<selects.length;i++){
+		selects[i].className += 'form-control'
+	}
+	var active = document.getElementById('id_status')
+	active.className = 'form-check-label'
+	active.id += ' gridCheck'
+
+	var date1 = document.getElementsById('id_start_date')
+	date1.type = 'date'
+
+	var active = document.getElementById('id_category')
+	active.className += 'select form-control'
+
+	document.getElementById('id_image').required = true;
+
+</script>
+{% endblock script %}

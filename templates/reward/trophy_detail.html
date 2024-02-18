@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>dettagli del trofeo</title>
+{% endblock title %}
+
+
+
+{% block content %}	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>dettagli del trofeo</h4>
+					<a href="{% url 'reward:update_trophy' trophy.id %}"><i class="fa fa-plus"></i></a>
+				</div>
+			<div class="link_box">
+			<table style="width:100%" class="table table-striped">
+			
+			<tbody>
+
+			<tr>
+			<td>titolo del trofeo</td>
+			<td>{{ trophy.title|title }}</td>
+			</tr>
+
+			<tr>
+			<td>punti</td>
+			<td>{{ trophy.points }}</td>
+			</tr>
+]
+
+			{% if trophy.image %}
+			<tr>
+			<td>immagine del trofeo</td>
+			<td><img src="{{ trophy.image.url }}" height="400px" width="400px"></td>
+			</tr>
+			{% endif %}
+			
+		
+			
+			</tbody>
+			</table>
+			
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}

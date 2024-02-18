@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>creare promozione</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=<api-key>&callback=initAutocomplete&libraries=places&v=weekly"
+  defer
+></script>
+<script>
+  // This example adds a search box to a map, using the Google Place Autocomplete
+  // feature. People can enter geographical searches. The search box will return a
+  // pick list containing a mix of places and predicted search terms.
+  // This example requires the Places library. Include the libraries=places
+  // parameter when you first load the API. For example:
+  // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+  function initAutocomplete() {
+	const map = new google.maps.Map(document.getElementById("map"), {
+	  center: { lat: -33.8688, lng: 151.2195 },
+	  zoom: 13,
+	  mapTypeId: "roadmap",
+	});
+	// Create the search box and link it to the UI element.
+	const input = document.getElementById("id_location_name");
+	const searchBox = new google.maps.places.SearchBox(input);
+	map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	// Bias the SearchBox results towards current map's viewport.
+	map.addListener("bounds_changed", () => {
+	  searchBox.setBounds(map.getBounds());
+	});
+	let markers = [];
+	// Listen for the event fired when the user selects a prediction and retrieve
+	// more details for that place.
+	searchBox.addListener("places_changed", () => {
+	  const places = searchBox.getPlaces();
+
+	  if (places.length == 0) {
+		return;
+	  }
+	  // Clear out the old markers.
+	  markers.forEach((marker) => {
+		marker.setMap(null);
+	  });
+	  markers = [];
+	  // For each place, get the icon, name and location.
+	  const bounds = new google.maps.LatLngBounds();
+	  places.forEach((place) => {
+		if (!place.geometry) {
+		  console.log("Returned place contains no geometry");
+		  return;
+		}
+		var lat = place.geometry.location.lat();
+		lat = lat.toString().slice(0,8);
+		document.getElementById('id_location_latitude').value = lat;
+		var lon = place.geometry.location.lng();
+		lon = lon.toString().slice(0,8);
+		document.getElementById('id_location_longitude').value = lon;
+		const icon = {
+		  url: place.icon,
+		  size: new google.maps.Size(71, 71),
+		  origin: new google.maps.Point(0, 0),
+		  anchor: new google.maps.Point(17, 34),
+		  scaledSize: new google.maps.Size(25, 25),
+		};
+		// Create a marker for each place.
+		markers.push(
+		  new google.maps.Marker({
+			map,
+			icon,
+			title: place.name,
+			position: place.geometry.location,
+		  })
+		);
+
+		if (place.geometry.viewport) {
+		  // Only geocodes have viewport.
+		  bounds.union(place.geometry.viewport);
+		} else {
+		  bounds.extend(place.geometry.location);
+		}
+	  });
+	  map.fitBounds(bounds);
+	});
+  }
+</script>
+{% endblock title %}
+
+
+
+{% block content %}
+	
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>creare promozione</h4>
+					
+				</div>
+			<div class="link_box">
+				<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				
+				<p>
+				<label for="id_location_name">Cerca posizione</label>
+				<input id="id_location_name" type="text">
+				</p>
+
+				{{ form.as_p }}
+				<div id="map"></div>
+
+				<button type="submit" class="btn btn-primary">creare promozione</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var labels = document.getElementsByTagName('label')
+	var inputs = document.getElementsByTagName('input')
+
+	for ( var i = 0; i<labels.length; i++){
+		if (labels[i].htmlFor == 'id_location_latitude' || labels[i].htmlFor == 'id_location_longitude' ){
+			labels[i].hidden = false
+		}
+	}
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	document.getElementById('id_location_latitude').hidden = false
+	document.getElementById('id_location_longitude').hidden = false
+
+</script>
+{% endblock script %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}	
+
+{% block title %}
+<title>Modifica prodotto</title>
+{% endblock title %}
+
+{% block content %}
+
+	<div class="m-t-82">
+		<div class="page_content">
+			<div class="vendor_outer">
+			
+			<div class="vendor_title">
+					<h4>Modifica prodotto</h4>
+					
+				</div>
+			<div class="link_box">
+			
+				<form method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+					
+					<div class="form-row">
+					<div class="form-group col-md-6">
+						<label> Nome</label>
+						{{ form.title }}
+						
+					</div>
+					<div class="form-group col-md-6">
+						<label> Categoria</label>
+						<!-- <select class="form-control"> -->
+						{{ form.category }}
+						</select>
+					</div>
+					<!-- <select name="category" class="select form-control" required="" id="id_category">
+						<option value="">---------</option> 
+						<option value="1" selected="">Nike</option>
+						<option value="2">Reboot</option>
+
+					</select> -->
+					
+					</div>
+
+					
+					<div class="form-row">
+					<div class="form-group col-md-6">
+						<label>Costo</label>
+						{{ form.cost }}
+					</div>
+					<div class="form-group col-md-6">
+						<label>Credito</label>
+						{{ form.points }}
+					</div>
+					</div>
+					
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label>Piace</label>
+							{{ form.hearts }}
+						</div>
+						<div class="form-group col-md-6">
+							<label>Cestino</label>
+							{{ form.basket }}
+						</div>
+					</div>
+					
+					<div class="form-row mt-4">
+					<div class="form-group col-md-12">
+						<label>Descrizione </label>
+						{{ form.description }}
+					</div>
+					
+					</div>
+					
+			
+			
+					
+					<div class="form-row">
+					<div class="form-group col-md-12">
+						<label for="inputEmail4">immagini</label>
+						{{ form.image }}
+					</div>
+					</div>
+					
+					<div class="form-group">
+					<div class="form-check">
+						{{ form.is_active }}
+						<label class="form-check-label" for="gridCheck">
+							Attiva
+						</label>
+					</div>
+					</div>
+					
+				
+
+					<button type="submit" class="btn btn-primary">Modifica prodotto</button>
+				</form>
+			
+			</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Copyright © 2020. </p>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+	var inputs = document.getElementsByTagName('input')
+	console.log(inputs)
+
+	for(i=0;i<inputs.length;i++){
+		inputs[i].className += 'form-control'
+	}
+
+	document.getElementsByTagName('textarea')[0].className += 'form-control'
+	var active = document.getElementById('id_is_active')
+	active.className = 'form-check-label'
+	active.id += 'gridCheck'
+
+	var active = document.getElementById('id_category')
+	active.className += 'select form-control'
+	
+	document.getElementById('id_image').required = false;
+
+</script>
+{% endblock script %}

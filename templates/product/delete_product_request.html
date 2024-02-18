@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Richiesta di prodotto Elimina</title>
+{% endblock title %}
+
+{% if form.errors %}
+    {% for error in form.errors %}
+        <h5>{{ error }}</h5>
+    {% endfor %}
+{% endif %}
+
+{% block content %}
+<div class="m-t-82">
+    <div class="page_content">
+        <div class="vendor_outer">
+        
+        <div class="vendor_title">
+                <h3>Richiesta di prodotto Elimina - {{ product_request }}</h3>
+                
+        </div>
+        <div class="link_box">
+        
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-row mb-3">
+                    <h3>Sei sicuro di voler eliminare "{{ product_request.product }}"" request by "{{ product_request.user }}" ?</h3>
+                    
+                </div>              
+                <h5>Categoria: {{ product_request.product.category }}</h5>
+                <h5>Costo: {{ product_request.product.cost }}</h5>
+                <h5>Creato a: {{ product_request.created_at }}</h5>
+                <h5>Stato Fullfill : {{ product_request.fullfilled }}</h5>
+                <div class="mt-5">
+                <button type="submit" class="btn btn-primary">Confermare</button>
+                <button  class="btn btn-secondary"><a href="{% url 'product:product_request' %}" class=" text-white">Annulla</a></button>
+                </div>
+            </form>
+        
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}
