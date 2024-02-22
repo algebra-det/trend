@@ -26,7 +26,7 @@ Then install the dependencies:
 ```
 Note the `(env)` in front of the prompt. This indicates that this terminal
 session operates in a virtual environment set up by `virtualenv2` or `venv`.
-SideNote: This can take a while to download all packages as it uses ML packages like opencv, etc, look at requirements3.txt for full listing
+SideNote: This can take a while to download all packages as it uses ML packages like opencv,numpy, etc, look at requirements3.txt for full listing
 
 Once `pip` has finished downloading the dependencies, run migrations for DB:
 ```sh
